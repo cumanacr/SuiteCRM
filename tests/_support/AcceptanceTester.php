@@ -1,5 +1,6 @@
 <?php
 
+use Faker\Factory;
 
 /**
  * Inherited Methods
@@ -19,9 +20,17 @@
 class AcceptanceTester extends \Codeception\Actor
 {
     use _generated\AcceptanceTesterActions;
-   /**
-    * Define custom actions here
-    */
+    /**
+     * Define custom actions here
+     */
+
+    /**
+     * @return \Faker\Generator
+     */
+    public function getFaker()
+    {
+        return Factory::create();
+    }
 
     /**
      * @param string $username
@@ -76,5 +85,4 @@ class AcceptanceTester extends \Codeception\Actor
         $I->dontSee('error');
         $I->dontSee('PHP');
     }
-
 }

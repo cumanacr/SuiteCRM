@@ -38,18 +38,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-/* * *******************************************************************************
-
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- * ****************************************************************************** */
 require_once('data/SugarBean.php');
 require_once('include/OutboundEmail/OutboundEmail.php');
 
@@ -93,20 +85,20 @@ class Administration extends SugarBean
         //If sendmail has been configured by setting the config variable ignore this warning
         $sendMailEnabled = isset($sugar_config['allow_sendmail_outbound']) && $sugar_config['allow_sendmail_outbound'];
 
-            // remove php notice from installer
-            if (!array_key_exists('mail_smtpserver', $this->settings)) {
-                $this->settings['mail_smtpserver'] = '';
-            }
+        // remove php notice from installer
+        if (!array_key_exists('mail_smtpserver', $this->settings)) {
+            $this->settings['mail_smtpserver'] = '';
+        }
 
-            if (trim($this->settings['mail_smtpserver']) == '' && !$sendMailEnabled) {
-                if (isset($this->settings['notify_on']) && $this->settings['notify_on']) {
-                    $smtp_error = true;
-                }
+        if (trim($this->settings['mail_smtpserver']) == '' && !$sendMailEnabled) {
+            if (isset($this->settings['notify_on']) && $this->settings['notify_on']) {
+                $smtp_error = true;
             }
+        }
 
-            if ($displayWarning && $smtp_error) {
-                displayAdminError(translate('WARN_NO_SMTP_SERVER_AVAILABLE_ERROR', 'Administration'));
-            }
+        if ($displayWarning && $smtp_error) {
+            displayAdminError(translate('WARN_NO_SMTP_SERVER_AVAILABLE_ERROR', 'Administration'));
+        }
 
 
         return $smtp_error;
@@ -173,7 +165,7 @@ class Administration extends SugarBean
             foreach ($oe->field_defs as $def) {
                 // fixes installer php notice
                 if (!array_key_exists($def, $this->settings)) {
-                    continue;
+                    $this->settings[$def] = '';
                 }
 
                 if (strpos($def, "mail_") !== false) {
